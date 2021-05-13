@@ -25,7 +25,7 @@ final class MainPresenter: MainPresenterProtocol {
     private let networkManager: NetworkManager<WeatherProvider>?
     private var threeHoursWeather: ThreeHoursWeatherModel?
     
-    private var city = "Vinnytsia" 
+    private var city = "Vinnytsia" // for start request
     
     typealias Completion = (() -> Void)
     
@@ -73,7 +73,7 @@ final class MainPresenter: MainPresenterProtocol {
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
-                    self.view?.showErrorAlert(alertText: "Error", alertMessage: error.localizedDescription)
+                    self.view?.showErrorAlert(alertText: StringValues.error, alertMessage: error.localizedDescription)
                 }
             }
         }
@@ -90,7 +90,7 @@ final class MainPresenter: MainPresenterProtocol {
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
-                    self.view?.showErrorAlert(alertText: "Error", alertMessage: error.localizedDescription)
+                    self.view?.showErrorAlert(alertText: StringValues.error, alertMessage: error.localizedDescription)
                 }
             }
         }

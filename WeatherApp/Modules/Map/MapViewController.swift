@@ -112,8 +112,8 @@ extension MapViewController: MapViewControllerProtocol {
 
 extension MapViewController: UISearchBarDelegate {
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        searchController?.searchBar.setValue("", forKey: "cancelButtonText")
-        searchController?.searchBar.setValue(searchImage, forKey: "cancelButtonText")
+        searchController?.searchBar.setValue("", forKey: StringValues.cancelButton)
+        searchController?.searchBar.setValue(searchImage, forKey: StringValues.cancelButton)
     }
 }
 
@@ -147,7 +147,7 @@ extension MapViewController: MKMapViewDelegate {
         geocode?.reverseGeocodeLocation(loc) { [weak self] placemarks, error in
             guard let self = self else { return }
             if let error = error {
-                self.showAlert(alertText: "Error", alertMessage: error.localizedDescription)
+                self.showAlert(alertText: StringValues.error, alertMessage: error.localizedDescription)
             }
             let placeMark = placemarks?.first
             if let city = placeMark?.locality {

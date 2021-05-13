@@ -70,6 +70,6 @@ extension TimeTableViewCell: UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 85, height: 170)
+        return CGSize(width: SizeStructure.timeCellWidth, height: SizeStructure.timeCellHeight)
     }
 }

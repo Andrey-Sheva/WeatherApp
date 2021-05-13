@@ -17,4 +17,9 @@ enum StringValues {
     static let apiKey = "5fc67f8f7e65acd297b451a075fc600b"
     
     static let imageUrl = "http://openweathermap.org/img/wn/"
+    
+    static let cancelButton = "cancelButtonText"
+    static let error = "Error"
 }
+
+
