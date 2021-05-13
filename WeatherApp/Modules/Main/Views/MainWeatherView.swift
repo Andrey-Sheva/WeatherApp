@@ -7,10 +7,10 @@
 
 import UIKit
 
-protocol MainWeatherViewProtocol: class {
+protocol MainWeatherViewProtocol: AnyObject {
     func display(day: String?)
     func display(temp: String?)
-    func display(persent: String?)
+    func display(perсent: String?)
     func display(speed: String?)
     func display(image: String?)
 }
@@ -19,7 +19,7 @@ final class MainWeatherView: UIView {
     @IBOutlet private var dayLabel: UILabel!
     @IBOutlet private var weatherImage: UIImageView!
     @IBOutlet private var speedLabel: UILabel!
-    @IBOutlet private var persentLabel: UILabel!
+    @IBOutlet private var perсentLabel: UILabel!
     @IBOutlet private var temperatureLabel: UILabel!
     
     override class func awakeFromNib() {
@@ -45,8 +45,8 @@ extension MainWeatherView: MainWeatherViewProtocol {
         temperatureLabel.text = temp
     }
     
-    func display(persent: String?) {
-        persentLabel.text = persent
+    func display(perсent: String?) {
+        perсentLabel.text = perсent
     }
     
     func display(speed: String?) {

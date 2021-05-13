@@ -7,17 +7,17 @@
 
 import UIKit
 
-protocol TimeTableViewCellProtocol: class {
+protocol TimeTableViewCellProtocol: AnyObject {
     func reloadCollectionView()
     func display(list: [ThreeHoursWeatherModelList])
-    var complitionHandler: ((Int) -> Void)? {get set}
+    var completionHandler: ((Int) -> Void)? { get set }
 }
 
 final class TimeTableViewCell: UITableViewCell {
 
     @IBOutlet private var collectionView: UICollectionView!
     private var threHoursList: [ThreeHoursWeatherModelList] = []
-    var complitionHandler: ((Int) -> Void)?
+    var completionHandler: ((Int) -> Void)?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -36,10 +36,7 @@ final class TimeTableViewCell: UITableViewCell {
     }
     
     private func configurateTimeCell(cell: TimeCollectionViewCell, indexPath: IndexPath) {
-        let time = threHoursList[indexPath.row].dtTxt?.components(separatedBy: " ")
-        cell.display(time: time?.last)
-        cell.display(temp: "\(Int(threHoursList[indexPath.item].main?.temp ?? 0) - 273) °C")
-        cell.display(image: threHoursList[indexPath.item].weather?.first?.icon)
+        cell.configurateCell(weatherList: threHoursList, indexPath: indexPath)
     }
 }
 
@@ -69,7 +66,7 @@ extension TimeTableViewCell: UICollectionViewDataSource, UICollectionViewDelegat
 
 extension TimeTableViewCell: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        complitionHandler?(indexPath.item)
+        completionHandler?(indexPath.item)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

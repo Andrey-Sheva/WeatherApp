@@ -19,9 +19,11 @@ extension MainViewController: MainViewControllerProtocol {
     }
     
     func navigateToMap() {
-        let viewController = container.makeMapViewController()
-        viewController.setupDelegate(delegate: self)
-        self.navigationController?.pushViewController(viewController, animated: true)
+        let viewController = container?.makeMapViewController()
+        viewController?.setupDelegate(delegate: self)
+        if let controller = viewController {
+            self.navigationController?.pushViewController(controller, animated: true)
+        }
     }
 }
 
@@ -29,14 +31,14 @@ extension MainViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.row {
         case 0:
-            return 170
+            return SizeStructure.dayCell
         default:
-            return CGFloat(presenter.getHeightForCells())
+            return SizeStructure.timeCell
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        presenter.didSelect(indexPath: indexPath)
+        presenter.didSelect(by: indexPath.row)
     }
 }
 

@@ -7,10 +7,8 @@
 
 import UIKit
 
-protocol TimeCollectionViewCellProtocol: class {
-    func display(time: String?)
-    func display(temp: String?)
-    func display(image: String?)
+protocol TimeCollectionViewCellProtocol: AnyObject {
+    func configurateCell(weatherList: [ThreeHoursWeatherModelList], indexPath: IndexPath)
 }
 
 final class TimeCollectionViewCell: UICollectionViewCell {
@@ -32,6 +30,15 @@ final class TimeCollectionViewCell: UICollectionViewCell {
         timeLabel.text = nil
         tempLabel.text = nil
         weatherImage.image = nil
+    }
+    
+    func configurateCell(weatherList: [ThreeHoursWeatherModelList], indexPath: IndexPath) {
+        let time = weatherList[indexPath.row].dtTxt?.components(separatedBy: " ")
+        DispatchQueue.main.async {
+            self.display(time: time?.last)
+            self.display(temp: "\(Int(weatherList[indexPath.item].main?.temp ?? 0) - 273) °C")
+            self.display(image: weatherList[indexPath.item].weather?.first?.icon)
+        }
     }
 }
 

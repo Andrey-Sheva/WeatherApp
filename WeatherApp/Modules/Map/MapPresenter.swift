@@ -8,7 +8,7 @@
 import Foundation
 import MapKit
 
-protocol MapPresenterProtocol: class {
+protocol MapPresenterProtocol: AnyObject {
     init(view: MapViewControllerProtocol, locationManager: CLLocationManager)
     func requestLocation(status: CLAuthorizationStatus)
     func dropPinZoomIn(mapView: MKMapView, placemark: MKPlacemark, selectedPin: inout MKPlacemark?)

@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol MainViewControllerProtocol: class {
+protocol MainViewControllerProtocol: AnyObject {
     func setupPresenter(presenter: MainPresenterProtocol)
     func showErrorAlert(alertText: String, alertMessage: String)
     func configurateCurrentWeather(with model: CurrentWeatherModel)
@@ -23,7 +23,7 @@ final class MainViewController: UIViewController {
     @IBOutlet private var scrollView: UIScrollView!
     
     //MARK: Properties
-    var container = DependencyContainer()
+    var container: DependencyContainer?
     
     var presenter: MainPresenterProtocol!
     private let mainWeather: MainWeatherView = .fromNib()
@@ -85,7 +85,7 @@ final class MainViewController: UIViewController {
     func configurateCurrentWeather(with model: CurrentWeatherModel) {
         DispatchQueue.main.async {
             self.mainWeather.display(day: "\(self.date)")
-            self.mainWeather.display(persent: "\(model.main?.humidity ?? 0) %")
+            self.mainWeather.display(perсent: "\(model.main?.humidity ?? 0) %")
             self.mainWeather.display(speed: "\(model.wind?.speed ?? 0.0) м/сек")
             if let maxTemp = model.main?.tempMax, let minTemp =  model.main?.tempMin{
                 self.mainWeather.display(temp: "\(Int(maxTemp - 273)) / \(Int(minTemp - 273)) °C") // -273 from kelvin to celsius
@@ -102,7 +102,7 @@ final class MainViewController: UIViewController {
             self.mainWeather.display(day: model.dtTxt)
             self.mainWeather.display(temp: "\(Int(model.main?.temp ?? 0) - 273) °C")
             self.mainWeather.display(speed: "\(model.wind?.speed ?? 0.0) м/сек")
-            self.mainWeather.display(persent: "\(model.main?.humidity ?? 0) %")
+            self.mainWeather.display(perсent: "\(model.main?.humidity ?? 0) %")
             
             if let image = model.weather?.first?.icon {
                 self.mainWeather.display(image: image)

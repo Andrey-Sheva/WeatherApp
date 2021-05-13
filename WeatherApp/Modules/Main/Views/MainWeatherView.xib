@@ -94,7 +94,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="dayLabel" destination="dRc-u1-3Pt" id="AfI-QC-TPM"/>
-                <outlet property="persentLabel" destination="OKZ-MU-tXD" id="SMn-l3-KdF"/>
+                <outlet property="perсentLabel" destination="OKZ-MU-tXD" id="SMn-l3-KdF"/>
                 <outlet property="speedLabel" destination="Edr-mx-Pvi" id="exu-65-P3g"/>
                 <outlet property="temperatureLabel" destination="ssa-bi-U9v" id="hPH-8C-bty"/>
                 <outlet property="weatherImage" destination="nFe-fV-fD9" id="3VD-46-0MY"/>

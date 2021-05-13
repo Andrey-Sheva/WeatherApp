@@ -12,7 +12,7 @@ protocol HandleMapSearch {
     func dropPinZoomIn(placemark: MKPlacemark)
 }
 
-protocol MapLoacationDelegate: class {
+protocol MapLoacationDelegate: AnyObject {
     func updateByMap(cityName: String)
 }
 

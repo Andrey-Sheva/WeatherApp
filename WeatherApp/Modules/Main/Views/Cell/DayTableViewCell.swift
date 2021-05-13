@@ -7,10 +7,8 @@
 
 import UIKit
 
-protocol DayTableViewCellProtocol: class {
-    func display(day: String?)
-    func display(temp: String?)
-    func display(image: String?)
+protocol DayTableViewCellProtocol: AnyObject {
+    func configurateCell(weatherList: [ThreeHoursWeatherModelList]?, indexPath: IndexPath)
 }
 
 final class DayTableViewCell: UITableViewCell {
@@ -50,6 +48,17 @@ final class DayTableViewCell: UITableViewCell {
     private func setTextColor(color: UIColor) {
         dayLabel.textColor = color
         tempLabel.textColor = color
+    }
+    
+    func configurateCell(weatherList: [ThreeHoursWeatherModelList]?, indexPath: IndexPath) {
+        if let list = weatherList {
+            let time = list[indexPath.row].dtTxt?.components(separatedBy: " ")
+            DispatchQueue.main.async {
+                self.display(temp: "\(Int(list[indexPath.row].main?.temp ?? 0.0) - 273) °C")
+                self.display(day: time?.last)
+                self.display(image: list[indexPath.row].weather?.first?.icon)
+            }
+        }
     }
     
 }

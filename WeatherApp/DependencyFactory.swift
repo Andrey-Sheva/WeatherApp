@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol ViewControllerFactory: class {
+protocol ViewControllerFactory: AnyObject {
     func makeMainViewController() -> MainViewController
     func makeMapViewController() -> MapViewController
 }

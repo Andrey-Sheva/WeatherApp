@@ -7,18 +7,21 @@
 
 import Foundation
 
-protocol MainPresenterProtocol: class {
-    init(view: MainViewControllerProtocol, networkManager: NetworkManager<WeatherProvider>)
+protocol MainPresenterProtocol: AnyObject {
     func configurateDayCell(cell: DayTableViewCellProtocol, indexPath: IndexPath)
     func configurateTimeCell(cell: TimeTableViewCellProtocol)
     func updateRequests(city: String)
-    func didSelect(indexPath: IndexPath)
+    func didSelect(by item: Int)
     func getDaysCount() -> Int
-    func getHeightForCells() -> Int
+}
+
+enum CellType {
+    case day
+    case time
 }
 
 final class MainPresenter: MainPresenterProtocol {
-    private var view: MainViewControllerProtocol?
+    weak var view: MainViewControllerProtocol?
     private let networkManager: NetworkManager<WeatherProvider>?
     private var threeHoursWeather: ThreeHoursWeatherModel?
     
@@ -40,25 +43,18 @@ final class MainPresenter: MainPresenterProtocol {
     
     func configurateDayCell(cell: DayTableViewCellProtocol, indexPath: IndexPath) {
         if let list = threeHoursWeather?.list {
-            let time = list[indexPath.row].dtTxt?.components(separatedBy: " ")
-            cell.display(temp: "\(Int(list[indexPath.row].main?.temp ?? 0.0) - 273) °C")
-            cell.display(day: time?.last)
-            cell.display(image: list[indexPath.row].weather?.first?.icon)
+            cell.configurateCell(weatherList: list, indexPath: indexPath)
         }
     }
     
-    func didSelect(indexPath: IndexPath) {
+    func didSelect(by item: Int) {
         if let list = threeHoursWeather?.list {
-            self.view?.configurateCurrentWeather(model: list[indexPath.row])
+            self.view?.configurateCurrentWeather(model: list[item])
         }
     }
     
     func getDaysCount() -> Int {
         return 6
-    }
-    
-    func getHeightForCells() -> Int {
-        return 75
     }
     
     //MARK: Requests
@@ -76,7 +72,9 @@ final class MainPresenter: MainPresenterProtocol {
                     self.getThreeHoursDaysWeather(city: city)
                 }
             case .failure(let error):
-                self.view?.showErrorAlert(alertText: "Error", alertMessage: error.localizedDescription)
+                DispatchQueue.main.async {
+                    self.view?.showErrorAlert(alertText: "Error", alertMessage: error.localizedDescription)
+                }
             }
         }
     }
@@ -91,7 +89,9 @@ final class MainPresenter: MainPresenterProtocol {
                     self.view?.reloadTableView()
                 }
             case .failure(let error):
-                self.view?.showErrorAlert(alertText: "Error", alertMessage: error.localizedDescription)
+                DispatchQueue.main.async {
+                    self.view?.showErrorAlert(alertText: "Error", alertMessage: error.localizedDescription)
+                }
             }
         }
     }
